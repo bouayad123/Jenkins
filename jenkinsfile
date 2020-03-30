@@ -1,0 +1,21 @@
+node{
+    stage('clone'){
+        checkout scm
+    }
+    
+    stage('Build image') {
+        app = docker.build("nginx")
+
+    }
+    
+    stage('Run Image'){
+        docker.image('nginx').withRun('-p 80:80') {
+        sh 'docker ps'
+        sh 'curl http://localhost'
+    }
+    }
+
+}
+
+
+
